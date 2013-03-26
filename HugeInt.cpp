@@ -60,20 +60,33 @@ int HugeInt::operator[] (int n)
 
 HugeInt HugeInt::operator++()
 {//operator overloading with pre-increment 
-	HugeInt preIncrement;
 	int index = 0;	
 	
-	preIncrement.digit[index] = this.digit[index] + 1;
+	this.digit[index]++;
 	
-	while(preIncrement.digit[index] == 10 && index < length)
+	while(this.digit[index] == 10 && index < length)
 	{
-		preincrement.digit[index + i] = this.digit[i] + 1;
+		this.digit[index] = 0;
+		this.digit[index + i] += 1;
 		index++;  
 	}
+	return (*this);
 }
 HugeInt HugeInt::operator++(int)
 {//opeartor overloading with post-increment 
 
+	HugeInt postIncrement = *this;
+	int index = 0;	
+	
+	postIncrement.digit[index] = this.digit[index] + 1;
+	
+	while(postIncrement.digit[index] == 10 && index < length)
+	{
+		postincrement.digit[index] = 0;
+		postincrement.digit[index + i] += 1;
+		index++;  
+	}
+	return (postIncrement);
 
 }
 bool HugeInt::operator==(const HugeInt& operand)const
