@@ -1,56 +1,62 @@
 #include <iostream>
 #include "math.h"
 #include "HugeInt.h"
-
+#include "stdlib.h"//where atoi is tored 
 using namespace std; 
 
 HugeInt::HugeInt()
 {
 	length = 4;
-	for(int i = digit.length(); i >= 0; i--)
+	for(int i =0; i < SIZE; i++)
 	{
 		if(i < 4)
 		{
-			digit[i] = 5;
+			digits[i] = 5;
 		}
 		else
 		{
-			digit[i] = 0;
+			digits[i] = 0;
 		}
 
 	}
 }
+
 HugeInt::HugeInt(string value)
 {
 	for(int n = 0; n < SIZE; n++)
 	{//initialize array 
 	 //in order to avoid to enter unknow value automatically 
-		digit[n] = 0;
+		digits[n] = 0;
 	}
 	int scalar; 
-	if(allDigit(value))
+	if(allDigits(value))
 	{
-		scalar = atoi(value);
+		for(int i = 0; i < value.length(); i++)
+		{
+			scalar = atoi(value.c_str());
+		}
 		for(int i = value.length()-1; i >= 0; i--)
 		{
-			digit[i] =(int)(scalar/pow(10, i) )% 10;
+			digits[i] =(int)(scalar/pow(10, i) )% 10;
 			//insrat each digit into array with back word..
 			length++; 
 		}
 	}
 
 }
+
 int HugeInt::numDigits() const
 {//return the num of digits in this HugeInt array 
 	
 	return length; 
 
-} 
+}
+ 
 int HugeInt::operator[] (int n)
 {
 	if(n >= 0 && n < length)
 	{
-		return digit[n];
+		return digits[n];
 	}
 	else
 	{
@@ -62,38 +68,39 @@ HugeInt HugeInt::operator++()
 {//operator overloading with pre-increment 
 	int index = 0;	
 	
-	this.digit[index]++;
+	this->digits[index]++;
 	
-	while(this.digit[index] == 10 && index < length)
+	while(this->digits[index] == 10 && index < length)
 	{
-		this.digit[index] = 0;
-		this.digit[index + i] += 1;
+		this->digits[index] = 0;
+		this->digits[index + 1] += 1;
 		index++;  
 	}
 	return (*this);
 }
+
 HugeInt HugeInt::operator++(int)
 {//opeartor overloading with post-increment 
 
 	HugeInt postIncrement = *this;
 	int index = 0;	
 	
-	postIncrement.digit[index] = this.digit[index] + 1;
+	postIncrement.digits[index] = digits[index] + 1;
 	
-	while(postIncrement.digit[index] == 10 && index < length)
+	while(postIncrement.digits[index] == 10 && index < length)
 	{
-		postincrement.digit[index] = 0;
-		postincrement.digit[index + i] += 1;
+		postIncrement.digits[index] = 0;
+		postIncrement.digits[index + 1] += 1;
 		index++;  
 	}
 	return (postIncrement);
-
 }
+
 bool HugeInt::operator==(const HugeInt& operand)const
 { 
 	for(int k = 0; k < SIZE; k++)
 	{
-		if(this.digit[k] != operand.digit[k])
+		if(digits[k] != operand.digits[k])
 		{
 			return false;
 		}
@@ -101,47 +108,53 @@ bool HugeInt::operator==(const HugeInt& operand)const
 	return true; 
 
 }
+
 bool HugeInt::operator!= (const HugeInt& operand)const
 {
 	for(int index = 0; index < SIZE; index++)
 	{
-		if(this.digit[index] == operand.digit[index])
+		if(digits[index] == operand.digits[index])
 		{
 			return false;
 		}
 	}
 	return true;
 }
-friend ostream& HugeInt::operator <<(ostream& out, const HugeInt& obj)
+//should not define 'frind' here(only with .h file)
+//do not need class name since it is not member function(?)
+ostream& operator<<(ostream& out, const HugeInt& obj)
 {
 	int hugeInt = 0;//store actual value of integer. 
-	for(int n = digit.length()-1; n >= 0; n--)
+	for(int n = obj.length; n >= 0; n--)
 	{
-		hugeInt += digit[n] * pow(10,n); 
+		hugeInt +=obj.digits[n] * pow(10,n); 
 	}
 	out << "HugeInt: " << hugeInt; 
 }
-friend HugeInt operator+ (const HugeInt& operand1, const HugeInt& operand2)
+
+HugeInt operator+ (const HugeInt& operand1, const HugeInt& operand2)
 {	
 	HugeInt sumInt;
-	for(int i = 0; i < length ; i++)
+	for(int i = 0; i < operand1.length || i < operand2.length ; i++)
 	{
-		sumInt.digit[i] = opeeand1.digit[i] + operand2.digit[i];
-		if(sumInt.digit[i] >= 10)
+		sumInt.digits[i] = operand1.digits[i] + operand2.digits[i];
+		if(sumInt.digits[i] >= 10)
 		{
-			sumInt.digit[i] = (int) (sumInt.digit[i] % 10);
-			sumInt.digit[i+1] = (int)(sumInt.digit[i]/10);
+			sumInt.digits[i] = (int) (sumInt.digits[i] % 10);
+			sumInt.digits[i+1] = (int)(sumInt.digits[i]/10);
 		}
 	}
+	return sumInt;
 }
 static bool allDigits(string str)
 {
 	for(int i = 0; i < str.length(); i++)
 	{
-		if(!isDigit(str[i]))
+		if(!isdigit(str[i]))
 		{
 			return false;	
 		}
 	}
 	return true; 
 }
+
