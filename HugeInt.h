@@ -19,6 +19,6 @@ class HugeInt
 	private:
 		int digits[];
 		int length;
-		int const SIZE = 50;	
+		static const  int SIZE = 50;	
 
 };
