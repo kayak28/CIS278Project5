@@ -23,24 +23,34 @@ HugeInt::HugeInt()
 
 HugeInt::HugeInt(string value)
 {
+	cout << "1st";
 	for(int n = 0; n < SIZE; n++)
 	{//initialize array 
 	 //in order to avoid to enter unknow value automatically 
 		digits[n] = 0;
+		cout << digits[n] << "\n";
 	}
+	cout << "2nd";
 	int scalar; 
 	if(allDigits(value))
 	{
-		for(int i = 0; i < value.length(); i++)
+		cout << "3rd\n";
+		for(int i = 1; i < value.length(); i++)
 		{
-			scalar = atoi(value.c_str());
+			digits[i] = atoi(value.at(value.length() - i));
+			//digits[i] = atoi(value[value.length() - i]);
+			//scalar = atoi(value.c_str());
 		}
+		/*cout << "scalar = "  << scalar ;
+		cout << "\n";
 		for(int i = value.length()-1; i >= 0; i--)
 		{
 			digits[i] =(int)(scalar/pow(10, i) )% 10;
 			//insrat each digit into array with back word..
 			length++; 
 		}
+		for(int i = value.length )
+		*/
 	}
 
 }

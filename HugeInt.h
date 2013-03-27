@@ -17,9 +17,9 @@ class HugeInt
 		static bool allDigits(string str);
 
 	private:
-		int digits[];
-		int length;
 		static const  int SIZE = 50; 
+		int digits[SIZE];
+		int length;
 };
 		//HugeInt::SIZE = 50;
 		//static const int HugeInt::SIZE = 50;	

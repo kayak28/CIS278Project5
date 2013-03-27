@@ -7,11 +7,11 @@ int main()
 	cout << "ttt";
 	HugeInt bigInt1();
 	cout << "kkk";
-	HugeInt bigInt2("999");
-	cout << "ppp";
+	HugeInt bigInt2("5435");
+	/*cout << "ppp";
 	cout << bigInt1;
 	cout << "mmm";
-
+*/
 
 
 
