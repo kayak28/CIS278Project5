@@ -146,7 +146,7 @@ HugeInt operator+ (const HugeInt& operand1, const HugeInt& operand2)
 	}
 	return sumInt;
 }
-static bool allDigits(string str)
+bool HugeInt::allDigits(string str)
 {
 	for(int i = 0; i < str.length(); i++)
 	{
