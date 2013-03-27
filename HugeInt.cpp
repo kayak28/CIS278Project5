@@ -28,18 +28,26 @@ HugeInt::HugeInt(string value)
 	{//initialize array 
 	 //in order to avoid to enter unknow value automatically 
 		digits[n] = 0;
-		cout << digits[n] << "\n";
+		//cout << digits[n] << "\n";
 	}
 	cout << "2nd";
 	int scalar; 
 	if(allDigits(value))
 	{
 		cout << "3rd\n";
-		for(int i = 1; i < value.length(); i++)
+		for(int i = 0; i < value.length(); i++)
 		{
-			digits[i] = atoi(value.at(value.length() - i));
+			
+			digits[i] = atoi(&value[value.length() - i]);
+			value[value.length() - i] = 0x00; 
+			//digits[i] = atoi(value[value.length() - i].c_str());
+			//digits[i] = atoi(value[i].c_str());
+			//digits[i] = value[value.length() - i];
+			//digits[i] = atoi(value.at(value.length() - i));
 			//digits[i] = atoi(value[value.length() - i]);
 			//scalar = atoi(value.c_str());
+			cout << "i = " << i << "\n" ;
+			cout << "digit = " << digits[i]<< "\n"; 
 		}
 		/*cout << "scalar = "  << scalar ;
 		cout << "\n";
