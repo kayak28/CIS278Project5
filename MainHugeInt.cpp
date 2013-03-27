@@ -4,14 +4,11 @@ using namespace std;
 
 int main()
 {
-	cout << "ttt";
+	cout << "ttt\n";
 	HugeInt bigInt1();
-	cout << "kkk";
-	HugeInt bigInt2("5435");
-	/*cout << "ppp";
+	cout << "kkk\n";
 	cout << bigInt1;
-	cout << "mmm";
-*/
+	cout << "\nmmm\n";
 
 
 

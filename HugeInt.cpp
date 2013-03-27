@@ -35,7 +35,7 @@ HugeInt::HugeInt(string value)
 	if(allDigits(value))
 	{
 		cout << "3rd\n";
-		for(int i = 0; i < value.length(); i++)
+		for(int i = 0; i < value.length() + 1; i++)
 		{
 			
 			digits[i] = atoi(&value[value.length() - i]);
@@ -88,11 +88,24 @@ HugeInt HugeInt::operator++()
 	
 	this->digits[index]++;
 	
-	while(this->digits[index] == 10 && index < length)
-	{
-		this->digits[index] = 0;
-		this->digits[index + 1] += 1;
-		index++;  
+	while(index < length)
+	{ 
+		if(this->digits[index] == 10)
+		{
+			this->digits[index] = 0;
+			this->digits[index + 1] += 1;
+			if(index == length + 1)
+			{
+				this -> length += 1;
+				
+			}
+			index++;
+			 
+		}
+		else
+		{
+			return (*this);
+		} 
 	}
 	return (*this);
 }
@@ -104,7 +117,21 @@ HugeInt HugeInt::operator++(int)
 	int index = 0;	
 	
 	postIncrement.digits[index] = digits[index] + 1;
+	while(index < length)
+	{
+		if(postIncrement.digits[index] == 10)
+		{
+			postIncrement.digits[index] = 0;
+			postIncrement.digits[index + 1] += 1;
+			index++;
+		}
+		else
+		{
+			return (postIncrement);
+		}
 	
+	}
+	/*
 	while(postIncrement.digits[index] == 10 && index < length)
 	{
 		postIncrement.digits[index] = 0;
@@ -112,6 +139,7 @@ HugeInt HugeInt::operator++(int)
 		index++;  
 	}
 	return (postIncrement);
+	*/
 }
 
 bool HugeInt::operator==(const HugeInt& operand)const
@@ -142,24 +170,30 @@ bool HugeInt::operator!= (const HugeInt& operand)const
 //do not need class name since it is not member function(?)
 ostream& operator<<(ostream& out, const HugeInt& obj)
 {
+	char buffer[50];
 	int hugeInt = 0;//store actual value of integer. 
-	for(int n = obj.length; n >= 0; n--)
+	/*for(int n = obj.length; n >= 0; n--)
 	{
 		hugeInt +=obj.digits[n] * pow(10,n); 
 	}
-	out << "HugeInt: " << hugeInt; 
+	//out << "HugeInt: " << hugeInt; 
+	*/
+	for(int i = obj.length; i > 0; i++ )
+	{
+		buffer[i] = itoa( obj.digits[i], buffer[i],10);
+	}
 }
 
 HugeInt operator+ (const HugeInt& operand1, const HugeInt& operand2)
 {	
 	HugeInt sumInt;
-	for(int i = 0; i < operand1.length || i < operand2.length ; i++)
+	for(int i = 0; i < operand1.length && i < operand2.length ; i++)
 	{
 		sumInt.digits[i] = operand1.digits[i] + operand2.digits[i];
 		if(sumInt.digits[i] >= 10)
 		{
 			sumInt.digits[i] = (int) (sumInt.digits[i] % 10);
-			sumInt.digits[i+1] = (int)(sumInt.digits[i]/10);
+			sumInt.digits[i+1] += 1;
 		}
 	}
 	return sumInt;
